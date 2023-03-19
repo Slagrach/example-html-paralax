@@ -220,24 +220,129 @@ makeItRain();
 
 
 
-
-            var validation = new JustValidate('#form', {
-            errorFieldCssClass: 'is-invalid',  
-            errorFieldStyle: { 
-            border: '5px solid red'},
-            errorLabelStyle: {
-            fontSize: '12px',
-            color: '#fcee09', 
-            margin: '7px 0 0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end'},
-            errorLabelCssClass: 'error',
-            successFieldCssClass: 'is-valid',
-            focusInvalidField: true,
-            lockForm: true,
-            errorsContainer: '.errors-container',
-            }, [{\n  key: 'Field is required',
-                 dict: {    
-                 ru: 'Поле, обязательное для заполнения'\n  }\n}, {\n  key: 'Name is too short',\n  dict: {\n    ru: 'Имя слишком короткое'\n  }\n}, {\n  key: 'Name is too long',\n  dict: {\n    ru: 'Имя слишком длинное'\n  }\n}, {\n  key: 'Email is required',\n  dict: {\n    ru: 'Email - обязательное поле'\n  }\n}, {\n  key: 'Email is invalid',\n  dict: {\n    ru: 'Указан некорректный Email'\n  }\n}, {\n  key: 'Phone is invalid',\n  dict: {\n    ru: 'Указан некорректный телефон'\n  }\n}, {\n  key: 'Message is too short',\n  dict: {\n    ru: 'Сообщение слишком короткое'\n  }\n}, {\n  key: 'Message is too long',\n  dict: {\n    ru: 'Сообщение слишком длинное'\n  }\n}]);\nvalidation.setCurrentLocale('ru');\nvalidation.addField('#name', [{\n  rule: 'required',\n  errorMessage: 'Field is required'\n}, {\n  rule: 'minLength',\n  value: 3,\n  errorMessage: 'Name is too short'\n}, {\n  rule: 'maxLength',\n  value: 30,\n  errorMessage: 'Name is too long'\n}]).addField('#email', [{\n  rule: 'required',\n  errorMessage: 'Email is required'\n}, {\n  rule: 'email',\n  errorMessage: 'Email is invalid'\n}]).addField('#tel', [{\n  rule: 'required',\n  value: true,\n  errorMessage: 'Field is required'\n}, // {\n// \trule: 'function',\n// \tvalidator: async function () {\n// \t\tconst phone = tel.inputmask.unmaskedvalue();\n// \t\treturn phone.length === 1;\n// \t},\n// \terrorMessage: 'Phone is invalid',\n// },\n{\n  rule: 'minLength',\n  value: 16,\n  errorMessage: 'Phone is invalid'\n} // {\n// \trule: 'maxLength',\n// \tvalue: 16,\n// \terrorMessage: 'Phone is invalid',\n// },\n]).addField('#message', [{\n  rule: 'required',\n  errorMessage: 'Field is required'\n}, // {\n// \tvalidator: (value) => {\n// \t\treturn value[1] === '!';\n// \t},\n// },\n{\n  rule: 'minLength',\n  value: 30,\n  errorMessage: 'Message is too short'\n}, {\n  rule: 'maxLength',\n  value: 150,\n  errorMessage: 'Message is too long'\n}]).onSuccess(function (event) {\n  var _console;\n\n  console.log('Validation passes and form submitted', event);\n  var formData = new FormData(event.target);\n\n  (_console = console).log.apply(_console, _toConsumableArray(formData));\n\n  var xhr = new XMLHttpRequest();\n\n  xhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n      if (xhr.status === 200) {\n        console.log('Отправлено');\n      }\n    }\n  };\n\n  xhr.open('POST', 'mail.php', true);\n  xhr.send(formData);\n  event.target.reset();\n  validation.refresh();\n});\n\nfunction eraseText() {\n  // document.getElementById('message').innerHTML = '';\n  // document.getElementById('name').innerHTML = '';\n  // document.getElementById('email').innerHTML = '';\n  // document.getElementById('tel').innerHTML = '';\n  // validation.destroy();\n  // validation.removeField('#name');\n  validation.refresh();\n}\n\ndocument.getElementById('cancel').addEventListener('click', function () {\n  // eraseText();\n  validation.refresh();\n}); // $(\"#form-two\").submit(function() { //Change\n// \tvar th = $(this);\n// \t$.ajax({\n// \t\ttype: \"POST\",\n// \t\turl: \"mail.php\", //Change\n// \t\tdata: th.serialize()\n// \t}).done(function() {\n// \t\talert(\"Thank you!\");\n// \t\tsetTimeout(function() {\n// \t\t\t// Done Functions\n// \t\t\tth.trigger(\"reset\");\n// \t\t}, 1000);\n// \t});\n// \treturn false;\n// });\n\n//# sourceURL=webpack://mytemplate/../%00#PORTFOLIO_2.0/src/pug/components/contacts/contacts.js?)
-		},
+//var validation = new JustValidate('#form', {
+//    errorFieldCssClass: 'is-invalid',
+//    errorFieldStyle: {
+//        border: '5px solid red'
+//    },
+//    errorLabelStyle: {
+//        fontSize: '12px',
+//        color: '#fcee09',
+//        margin: '7px 0 0',
+//        display: 'flex',
+//        alignItems: 'center',
+//        justifyContent: 'flex-end'
+//    },
+//    errorLabelCssClass: 'error',
+//    successFieldCssClass: 'is-valid',
+//    focusInvalidField: true,
+//    lockForm: true,
+//    errorsContainer: '.errors-container',
+//}, [{
+//    \
+//    n key: 'Field is required',
+//    dict: {
+//        ru: 'Поле, обязательное для заполнения'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Name is too short',
+//    \n dict: {
+//        \
+//        n ru: 'Имя слишком короткое'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Name is too long',
+//    \n dict: {
+//        \
+//        n ru: 'Имя слишком длинное'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Email is required',
+//    \n dict: {
+//        \
+//        n ru: 'Email - обязательное поле'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Email is invalid',
+//    \n dict: {
+//        \
+//        n ru: 'Указан некорректный Email'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Phone is invalid',
+//    \n dict: {
+//        \
+//        n ru: 'Указан некорректный телефон'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Message is too short',
+//    \n dict: {
+//        \
+//        n ru: 'Сообщение слишком короткое'\
+//        n
+//    }\
+//    n
+//}, {
+//    \
+//    n key: 'Message is too long',
+//    \n dict: {
+//        \
+//        n ru: 'Сообщение слишком длинное'\
+//        n
+//    }\
+//    n
+//}]);\
+//nvalidation.setCurrentLocale('ru');\
+//nvalidation.addField('#name', [{
+//        \
+//        n rule: 'required',
+//        \n errorMessage: 'Field is required'\
+//        n
+//    }, {
+//        \
+//        n rule: 'minLength',
+//        \n value: 3,
+//        \n errorMessage: 'Name is too short'\
+//        n
+//    }, {
+//        \
+//        n rule: 'maxLength',
+//        \n value: 30,
+//        \n errorMessage: 'Name is too long'\
+//        n
+//    }]).addField('#email', [{
+//        \
+//        n rule: 'required',
+//        \n errorMessage: 'Email is required'\
+//        n
+//    }, {
+//        \
+//        n rule: 'email',
+//        \n errorMessage: 'Email is invalid'\
+//        n
+//    }]).addField('#tel', [{
+//                \
+//                n rule: 'required',
+//                \n value: true,
+//                \n errorMessage: 'Field is required'\
+//                n
+//            }, // {\n// \trule: 'function',\n// \tvalidator: async function () {\n// \t\tconst phone = tel.inputmask.unmaskedvalue();\n// \t\treturn phone.length === 1;\n// \t},\n// \terrorMessage: 'Phone is invalid',\n// },\n{\n  rule: 'minLength',\n  value: 16,\n  errorMessage: 'Phone is invalid'\n} // {\n// \trule: 'maxLength',\n// \tvalue: 16,\n// \terrorMessage: 'Phone is invalid',\n// },\n]).addField('#message', [{\n  rule: 'required',\n  errorMessage: 'Field is required'\n}, // {\n// \tvalidator: (value) => {\n// \t\treturn value[1] === '!';\n// \t},\n// },\n{\n  rule: 'minLength',\n  value: 30,\n  errorMessage: 'Message is too short'\n}, {\n  rule: 'maxLength',\n  value: 150,\n  errorMessage: 'Message is too long'\n}]).onSuccess(function (event) {\n  var _console;\n\n  console.log('Validation passes and form submitted', event);\n  var formData = new FormData(event.target);\n\n  (_console = console).log.apply(_console, _toConsumableArray(formData));\n\n  var xhr = new XMLHttpRequest();\n\n  xhr.onreadystatechange = function () {\n    if (xhr.readyState === 4) {\n      if (xhr.status === 200) {\n        console.log('Отправлено');\n      }\n    }\n  };\n\n  xhr.open('POST', 'mail.php', true);\n  xhr.send(formData);\n  event.target.reset();\n  validation.refresh();\n});\n\nfunction eraseText() {\n  // document.getElementById('message').innerHTML = '';\n  // document.getElementById('name').innerHTML = '';\n  // document.getElementById('email').innerHTML = '';\n  // document.getElementById('tel').innerHTML = '';\n  // validation.destroy();\n  // validation.removeField('#name');\n  validation.refresh();\n}\n\ndocument.getElementById('cancel').addEventListener('click', function () {\n  // eraseText();\n  validation.refresh();\n}); // $(\"#form-two\").submit(function() { //Change\n// \tvar th = $(this);\n// \t$.ajax({\n// \t\ttype: \"POST\",\n// \t\turl: \"mail.php\", //Change\n// \t\tdata: th.serialize()\n// \t}).done(function() {\n// \t\talert(\"Thank you!\");\n// \t\tsetTimeout(function() {\n// \t\t\t// Done Functions\n// \t\t\tth.trigger(\"reset\");\n// \t\t}, 1000);\n// \t});\n// \treturn false;\n// });\n\n//# sourceURL=webpack://mytemplate/../%00#PORTFOLIO_2.0/src/pug/components/contacts/contacts.js?)
+//        },
